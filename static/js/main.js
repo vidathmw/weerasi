@@ -4,12 +4,12 @@ AOS.init({
     once: true
 })
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
     'use strict'
 
     // loader
-    var loader = function () {
-        setTimeout(function () {
+    var loader = function() {
+        setTimeout(function() {
             if ($('#loader').length > 0) {
                 $('#loader').removeClass('show')
             }
@@ -17,8 +17,8 @@ jQuery(document).ready(function ($) {
     }
     loader()
 
-    var siteMenuClone = function () {
-        $('.js-clone-nav').each(function () {
+    var siteMenuClone = function() {
+        $('.js-clone-nav').each(function() {
             var $this = $(this)
             $this
                 .clone()
@@ -26,9 +26,9 @@ jQuery(document).ready(function ($) {
                 .appendTo('.site-mobile-menu-body')
         })
 
-        setTimeout(function () {
+        setTimeout(function() {
             var counter = 0
-            $('.site-mobile-menu .has-children').each(function () {
+            $('.site-mobile-menu .has-children').each(function() {
                 var $this = $(this)
 
                 $this.prepend('<span class="arrow-collapse collapsed">')
@@ -47,7 +47,7 @@ jQuery(document).ready(function ($) {
             })
         }, 1000)
 
-        $('body').on('click', '.arrow-collapse', function (e) {
+        $('body').on('click', '.arrow-collapse', function(e) {
             var $this = $(this)
             if (
                 $this
@@ -62,7 +62,7 @@ jQuery(document).ready(function ($) {
             e.preventDefault()
         })
 
-        $(window).resize(function () {
+        $(window).resize(function() {
             var $this = $(this),
                 w = $this.width()
 
@@ -73,7 +73,7 @@ jQuery(document).ready(function ($) {
             }
         })
 
-        $('body').on('click', '.js-menu-toggle', function (e) {
+        $('body').on('click', '.js-menu-toggle', function(e) {
             var $this = $(this)
             e.preventDefault()
 
@@ -87,7 +87,7 @@ jQuery(document).ready(function ($) {
         })
 
         // click outisde offcanvas
-        $(document).mouseup(function (e) {
+        $(document).mouseup(function(e) {
             var container = $('.site-mobile-menu')
             if (
                 !container.is(e.target) &&
@@ -101,8 +101,8 @@ jQuery(document).ready(function ($) {
     }
     siteMenuClone()
 
-    var sitePlusMinus = function () {
-        $('.js-btn-minus').on('click', function (e) {
+    var sitePlusMinus = function() {
+        $('.js-btn-minus').on('click', function(e) {
             e.preventDefault()
             if (
                 $(this)
@@ -128,7 +128,7 @@ jQuery(document).ready(function ($) {
                     .val(parseInt(0))
             }
         })
-        $('.js-btn-plus').on('click', function (e) {
+        $('.js-btn-plus').on('click', function(e) {
             e.preventDefault()
             $(this)
                 .closest('.input-group')
@@ -145,26 +145,26 @@ jQuery(document).ready(function ($) {
     }
     // sitePlusMinus();
 
-    var siteSliderRange = function () {
+    var siteSliderRange = function() {
         $('#slider-range').slider({
             range: true,
             min: 0,
             max: 500,
             values: [75, 300],
-            slide: function (event, ui) {
+            slide: function(event, ui) {
                 $('#amount').val('$' + ui.values[0] + ' - $' + ui.values[1])
             }
         })
         $('#amount').val(
             '$' +
-            $('#slider-range').slider('values', 0) +
-            ' - $' +
-            $('#slider-range').slider('values', 1)
+                $('#slider-range').slider('values', 0) +
+                ' - $' +
+                $('#slider-range').slider('values', 1)
         )
     }
     // siteSliderRange();
 
-    var siteCarousel = function () {
+    var siteCarousel = function() {
         if ($('.hero-slide').length > 0) {
             $('.hero-slide').owlCarousel({
                 items: 1,
@@ -294,7 +294,7 @@ jQuery(document).ready(function ($) {
     }
     siteCarousel()
 
-    var siteStellar = function () {
+    var siteStellar = function() {
         $(window).stellar({
             responsive: false,
             parallaxBackgrounds: true,
@@ -306,41 +306,41 @@ jQuery(document).ready(function ($) {
     }
     siteStellar()
 
-    var siteCountDown = function () {
-        $('#date-countdown').countdown('2020/10/10', function (event) {
+    var siteCountDown = function() {
+        $('#date-countdown').countdown('2020/10/10', function(event) {
             var $this = $(this).html(
                 event.strftime(
                     '' +
-                    '<span class="countdown-block"><span class="label">%w</span> weeks </span>' +
-                    '<span class="countdown-block"><span class="label">%d</span> days </span>' +
-                    '<span class="countdown-block"><span class="label">%H</span> hr </span>' +
-                    '<span class="countdown-block"><span class="label">%M</span> min </span>' +
-                    '<span class="countdown-block"><span class="label">%S</span> sec</span>'
+                        '<span class="countdown-block"><span class="label">%w</span> weeks </span>' +
+                        '<span class="countdown-block"><span class="label">%d</span> days </span>' +
+                        '<span class="countdown-block"><span class="label">%H</span> hr </span>' +
+                        '<span class="countdown-block"><span class="label">%M</span> min </span>' +
+                        '<span class="countdown-block"><span class="label">%S</span> sec</span>'
                 )
             )
         })
     }
     siteCountDown()
 
-    var siteDatePicker = function () {
+    var siteDatePicker = function() {
         if ($('.datepicker').length > 0) {
             $('.datepicker').datepicker()
         }
     }
     siteDatePicker()
 
-    var siteSticky = function () {
+    var siteSticky = function() {
         $('.js-sticky-header').sticky({ topSpacing: 0 })
     }
     siteSticky()
 
     // navigation
-    var OnePageNavigation = function () {
+    var OnePageNavigation = function() {
         var navToggler = $('.site-menu-toggle')
         $('body').on(
             'click',
             ".main-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a",
-            function (e) {
+            function(e) {
                 e.preventDefault()
 
                 var hash = this.hash
@@ -351,7 +351,7 @@ jQuery(document).ready(function ($) {
                     },
                     600,
                     'easeInOutCirc',
-                    function () {
+                    function() {
                         window.location.hash = hash
                     }
                 )
@@ -360,8 +360,8 @@ jQuery(document).ready(function ($) {
     }
     //   OnePageNavigation();
 
-    var siteScroll = function () {
-        $(window).scroll(function () {
+    var siteScroll = function() {
+        $(window).scroll(function() {
             var st = $(this).scrollTop()
 
             if (st > 100) {
@@ -373,7 +373,7 @@ jQuery(document).ready(function ($) {
     }
     siteScroll()
 
-    $(function () {
+    $(function() {
         // $("#bgndVideo").YTPlayer();
     })
 })

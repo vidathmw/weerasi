@@ -44,8 +44,9 @@ export default {
             { src: '/js/jquery.fancybox.min.js', body: true },
             { src: '/js/jquery.sticky.js', body: true },
             { src: '/js/jquery.mb.YTPlayer.min.js', body: true },
-            { src: '/js/bootstrap-datepicker.min.js', body: true }
-        ],
+            { src: '/js/bootstrap-datepicker.min.js', body: true },
+            { src: '/js/main.js', body: true }
+        ]
 
         // bodyAttrs: {
         //     'data-spy': 'scroll',
