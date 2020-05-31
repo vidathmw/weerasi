@@ -20,7 +20,6 @@ export default {
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
             { rel: 'stylesheet', href: '/fonts/icomoon/style.css' },
-            { rel: 'stylesheet', href: '/css/bootstrap.min.css' },
             { rel: 'stylesheet', href: '/css/jquery-ui.css' },
             { rel: 'stylesheet', href: '/css/jquery.fancybox.min.css' },
             { rel: 'stylesheet', href: '/css/bootstrap-datepicker.css' },
@@ -35,26 +34,24 @@ export default {
             }
         ],
         script: [
-            { src: '/js/jquery-3.3.1.min.js' },
-            { src: '/js/jquery-migrate-3.0.1.min.js' },
-            { src: '/js/jquery-ui.js' },
-            { src: '/js/jquery.stellar.min.js' },
-            { src: '/js/jquery.countdown.min.js' },
-            { src: '/js/jquery.easing.1.3.js' },
-            { src: '/js/aos.js' },
-            { src: '/js/jquery.fancybox.min.js' },
-            { src: '/js/jquery.sticky.js' },
-            { src: '/js/jquery.mb.YTPlayer.min.js' },
-            { src: '/js/popper.min.js' },
-            { src: '/js/bootstrap.min.js' },
-            { src: '/js/bootstrap-datepicker.min.js' }
+            { src: '/js/jquery-3.3.1.min.js', body: true },
+            { src: '/js/jquery-migrate-3.0.1.min.js', body: true },
+            { src: '/js/jquery-ui.js', body: true },
+            { src: '/js/jquery.stellar.min.js', body: true },
+            { src: '/js/jquery.countdown.min.js', body: true },
+            { src: '/js/jquery.easing.1.3.js', body: true },
+            { src: '/js/aos.js', body: true },
+            { src: '/js/jquery.fancybox.min.js', body: true },
+            { src: '/js/jquery.sticky.js', body: true },
+            { src: '/js/jquery.mb.YTPlayer.min.js', body: true },
+            { src: '/js/bootstrap-datepicker.min.js', body: true }
         ],
 
-        bodyAttrs: {
-            'data-spy': 'scroll',
-            'data-target': '.site-navbar-target',
-            'data-offset': '300'
-        }
+        // bodyAttrs: {
+        //     'data-spy': 'scroll',
+        //     'data-target': '.site-navbar-target',
+        //     'data-offset': '300'
+        // }
     },
     /*
      ** Customize the progress-bar color
@@ -85,7 +82,7 @@ export default {
      */
     modules: [
         // Doc: https://bootstrap-vue.js.org
-        // 'bootstrap-vue/nuxt',
+        'bootstrap-vue/nuxt',
         // Doc: https://axios.nuxtjs.org/usage
         '@nuxtjs/axios',
         '@nuxtjs/pwa'
