@@ -12,7 +12,7 @@
                             />
                         </p>
                         <h1 class="mb-4">
-                            News Needs to Meet Its Audiences Where They Are
+                            {{ post.title }}
                         </h1>
                         <div class="post-meta d-flex mb-5">
                             <div class="bio-pic mr-3">
@@ -544,7 +544,64 @@
 </template>
 
 <script>
-export default {}
+export default {
+    data() {
+        return {
+            post: {
+                title: 'loading',
+                date: '',
+                content: '',
+                featuredMediaID: '',
+                featuredMediaFull: '',
+                featuredMediaMedium: '',
+                featuredMediaThumbnail: ''
+            }
+        }
+    },
+    created() {
+        this.fetch()
+    },
+    methods: {
+        async fetch() {
+            try {
+                const post = await fetch(
+                    `https://weerasi.000webhostapp.com/wp-json/wp/v2/posts/${this.$route.params.id}`
+                ).then((res) => res.json())
+
+                if (post.id) {
+                    console.log(post)
+                    this.post.title = post.title.rendered
+                    this.post.date = post.date.str.split('T', 1)
+                    this.post.content = post.content.rendered
+                    this.post.featuredMediaID = post.featured_media
+                } else {
+                    // set status code on server and
+                    if (process.server) {
+                        this.$nuxt.context.res.statusCode = 404
+                    }
+                    // use throw new Error()
+                    throw new Error('Post not found')
+                }
+            } catch (error) {}
+        },
+        async fetchFeaturedMedia(id) {
+            try {
+                const featured = await fetch(
+                    `https://weerasi.000webhostapp.com/wp-json/wp/v2/media/${id}`
+                ).then((res) => res.json())
+
+                if (featured.id === id) {
+                    this.featuredMediaFull =
+                        featured.media_details.sizes.full.source_url
+                    this.featuredMediaMedium =
+                        featured.media_details.sizes.medium.source_url
+                    this.featuredMediaThumbnail =
+                        featured.media_details.sizes.thumbnail.source_url
+                }
+            } catch (error) {}
+        }
+    }
+}
 </script>
 
 <style scoped></style>

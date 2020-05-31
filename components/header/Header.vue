@@ -14,7 +14,7 @@
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-6 d-flex">
                         <a href="index.html" class="site-logo">
-                            Meranda
+                            WeeraSi
                         </a>
 
                         <a
