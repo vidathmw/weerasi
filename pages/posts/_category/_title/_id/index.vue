@@ -1,16 +1,18 @@
 <template>
     <div>
         <div class="site-section">
-            <div class="container">
+            <div
+                class="container d-flex justify-content-center align-items-center"
+            >
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8 single-content">
-                        <div class="mb-5 d-flex justify-content-center">
+                        <!-- <div class="mb-5 d-flex justify-content-center">
                             <img
                                 :src="post.featuredMediaMedium"
                                 alt="Image"
                                 class="img-fluid"
                             />
-                        </div>
+                        </div> -->
                         <h1 class="mb-4">
                             {{ post.title }}
                         </h1>
@@ -42,6 +44,7 @@
                             </p>
                         </div>
                     </div>
+                    <div class="col-lg-4"></div>
                 </div>
             </div>
         </div>
