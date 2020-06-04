@@ -66,63 +66,37 @@
                                 role="navigation"
                             >
                                 <ul
+                                    v-if="$fetchState.pending === false"
                                     class="site-menu main-menu js-clone-nav mr-auto d-none pl-0 d-lg-block"
                                 >
                                     <li class="active">
-                                        <a
-                                            href="index.html"
+                                        <nuxt-link
+                                            to="/"
                                             class="nav-link text-left"
-                                            >Home</a
+                                            >Home</nuxt-link
                                         >
                                     </li>
-                                    <li>
-                                        <a
-                                            href="categories.html"
+                                    <li
+                                        v-for="category of categories"
+                                        :key="category.id"
+                                    >
+                                        <nuxt-link
+                                            v-if="
+                                                category.slug !==
+                                                    'uncategorised' &&
+                                                    category.name !==
+                                                        'Editor\'s Choice'
+                                            "
                                             class="nav-link text-left"
-                                            >Categories</a
+                                            :to="
+                                                '/categories/' +
+                                                    category.slug +
+                                                    '/' +
+                                                    category.id
+                                            "
                                         >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="categories.html"
-                                            class="nav-link text-left"
-                                            >Politics</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="categories.html"
-                                            class="nav-link text-left"
-                                            >Business</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="categories.html"
-                                            class="nav-link text-left"
-                                            >Health</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="categories.html"
-                                            class="nav-link text-left"
-                                            >Design</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="categories.html"
-                                            class="nav-link text-left"
-                                            >Sport</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="contact.html"
-                                            class="nav-link text-left"
-                                            >Contact</a
-                                        >
+                                            {{ category.name }}
+                                        </nuxt-link>
                                     </li>
                                 </ul>
                             </nav>
@@ -135,7 +109,26 @@
 </template>
 
 <script>
-export default {}
+export default {
+    async fetch() {
+        this.categories = await this.$http.$get(
+            `https://weerasi.000webhostapp.com/wp-json/wp/v2/categories/`
+        )
+    },
+    data() {
+        return {
+            categories: []
+        }
+    },
+    methods: {
+        dynamicLink(catName, catID) {
+            this.$router.push(`/categories/${catName}/${catID}`)
+        },
+        test() {
+            console.log(this.categories)
+        }
+    }
+}
 </script>
 
 <style scoped></style>

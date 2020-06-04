@@ -29,77 +29,32 @@
                                     ><a href="#">{{ post.author }}</a></span
                                 >
                                 <span class="date-read"
-                                    >Jun 14 <span class="mx-1">&bullet;</span> 3
-                                    min read <span class="icon-star2"></span
-                                ></span>
+                                    >{{ getYear().res[0] }}
+                                </span>
                             </div>
                         </div>
                         <!-- eslint-disable-next-line vue/no-v-html -->
                         <div v-html="post.content"></div>
-                        <div class="pt-5">
+                        <div v-if="!post.isfetching" class="pt-5">
                             <p>
-                                Categories: <a href="#">Design</a>,
-                                <a href="#">Events</a> Tags:
-                                <a href="#">#html</a>, <a href="#">#trends</a>
+                                Categories:
+                                <a
+                                    v-for="(category, key) in post.categories"
+                                    :key="key"
+                                    href="#"
+                                    >{{ category }}</a
+                                >, Tags:
+                                <a
+                                    v-for="(tag, key) in post.tags"
+                                    :key="key"
+                                    href="#"
+                                >
+                                    {{ tag }} ,</a
+                                >
                             </p>
                         </div>
                     </div>
                     <div class="col-lg-4"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="site-section subscribe bg-light">
-            <div class="container">
-                <form action="#" class="row align-items-center">
-                    <div class="col-md-5 mr-auto">
-                        <h2>Newsletter Subcribe</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Perferendis aspernatur ut at quae omnis
-                            pariatur obcaecati possimus nisi ea iste!
-                        </p>
-                    </div>
-                    <div class="col-md-6 ml-auto">
-                        <div class="d-flex">
-                            <input
-                                type="email"
-                                class="form-control"
-                                placeholder="Enter your email"
-                            />
-                            <button type="submit" class="btn btn-secondary">
-                                <span class="icon-paper-plane"></span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="copyright">
-                            <p>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script>
-                                All rights reserved | This template is made with
-                                <i
-                                    class="icon-heart text-danger"
-                                    aria-hidden="true"
-                                ></i>
-                                by
-                                <a href="https://colorlib.com" target="_blank"
-                                    >Colorlib</a
-                                >
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -120,7 +75,10 @@ export default {
                 featuredMediaThumbnail: '',
                 author: '',
                 category: '',
-                authorDP: String
+                authorDP: String,
+                categories: [],
+                tags: [],
+                isFetching: true
             }
         }
     },
@@ -144,6 +102,8 @@ export default {
                     this.post.date = post.date
                     this.post.content = post.content.rendered
                     this.post.featuredMediaID = post.featured_media
+                    this.fetchTags(post.tags)
+                    this.fetchCategories(post.categories)
                     this.fetchFeaturedMedia(post.featured_media)
                     this.fetchAuthor(post.author)
                     this.$nuxt.$loading.finish()
@@ -185,9 +145,46 @@ export default {
                 if (author.id) {
                     this.post.author = author.name
                     this.post.authorDP = author.avatar_urls[48]
-                    console.log(author.avatar_urls[48])
                 }
             } catch (error) {}
+        },
+        async fetchCategories(categories) {
+            try {
+                for (
+                    let categoryID = 0;
+                    categoryID < categories.length;
+                    categoryID++
+                ) {
+                    const category = await fetch(
+                        `https://weerasi.000webhostapp.com/wp-json/wp/v2/categories/${categories[categoryID]}`
+                    ).then((res) => res.json())
+                    if (category.id !== null) {
+                        this.post.categories[this.post.categories.length] =
+                            category.name
+                    }
+                }
+            } catch (error) {}
+        },
+        async fetchTags(tagIDs) {
+            try {
+                for (let tagID = 0; tagID < tagIDs.length; tagID++) {
+                    const tag = await fetch(
+                        `https://weerasi.000webhostapp.com/wp-json/wp/v2/tags/${tagIDs[tagID]}`
+                    ).then((res) => res.json())
+                    if (tag.id !== null) {
+                        this.post.tags[this.post.tags.length] = tag.name
+                    }
+                }
+                this.post.isFetching = false
+            } catch (error) {
+                this.post.isFetching = false
+            }
+        },
+        getYear() {
+            const res = this.post.date.split('T', 1)
+            return {
+                res
+            }
         }
     }
 }
