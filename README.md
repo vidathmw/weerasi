@@ -1,6 +1,7 @@
 # weerasi
 
 > Vidath&#39;s Blog
+Simple blog made with nuxt.js server side rendering and wordpress as headless cms
 
 ## Build Setup
 
